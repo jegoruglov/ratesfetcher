@@ -5,6 +5,21 @@ Run from ratesfetcher directory
 	
 	python main.py
 
+To perform unit testing, run (ex.)
+
+	python -m unittest test_rateparser
+
+or use Nose framework for batch testing
+	
 Rates source: http://www.ecb.int/home/html/rss.en.html
 Rates update frequency of source: daily
 Rates update frequescy of fetcher: configurable
+
+Features
+Fetches 5 exchange rates concurrently
+Fetch rate for each exchange rate is configurable
+HTTP connection has configurable number of retries in case of failure
+Output options can be standard output, database, or both
+Test cases are created for linkparser, rateparser and ratefetcherthread
+
+
