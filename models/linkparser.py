@@ -1,5 +1,6 @@
 import urllib2
 import re
+
 from ratesfetcher.config import conf
 
 # Enables parsing html document based on xpath
@@ -22,6 +23,7 @@ class LinkParser(object):
 				if html:
 					break
 			except urllib2.HTTPError:
+				print "ERROR: HTTP connection failed, retrying ..."
 				retry_counter -= 1
 
 		if not html:
