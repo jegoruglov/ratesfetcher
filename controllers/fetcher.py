@@ -9,20 +9,23 @@ from ratesfetcher.config import conf
 
 class Fetcher(object):
 	def __init__(self, output='std'):
+		self.initialize()
+		self.rates_update_countdown = 1
+		self.q = Queue(conf.number_of_threads)
+		self.output = output
+
+	def initialize(self):
 		self.links_parser = linkparser.LinkParser(
 			conf.rates_source_uri, pattern=conf.links_pattern
 		)
 		self.links = self.links_parser.parse()
 		self.links_update_countdown = conf.links_update_rate
-		self.rates_update_countdown = 1
-		self.q = Queue(conf.number_of_threads)
-		self.output = output
 
 	def fetch(self):
 		while True:
 			# Update links if time has come
 			if self.links_update_countdown == 0:
-				self.__init__()
+				self.initialize()
 			# Make a list of exchange rates that are ready for update
 			links = []
 			for k, v in self.links.iteritems():
