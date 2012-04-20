@@ -14,12 +14,18 @@ class LinkParser(object):
 		self.pattern = pattern
 
 	def parse(self):
-		try:
-			html = urllib2.urlopen(self.uri).read()
-		except HTTPError as e:
-			# TODO: as the utility is a cronjob,
-			# might want to log instead of raising
-			raise e
+		retry_counter = conf.number_of_connection_retries
+		html = None
+		while retry_counter:
+			try:
+				html = urllib2.urlopen(self.uri).read()
+				if html:
+					break
+			except urllib2.HTTPError:
+				retry_counter -= 1
+
+		if not html:
+			raise Exception('HTTP Error while fetching rss links')
 		
 		pattern = re.compile(r'<a[^>]*>')
 		a_tags = pattern.findall(html)
