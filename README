@@ -1,0 +1,10 @@
+RatesFetcher is a cronjob that fetches exchange rates
+with frequecies specified in configuration file.
+
+Run from ratesfetcher directory
+	
+	python main.py
+
+Rates source: http://www.ecb.int/home/html/rss.en.html
+Rates update frequency of source: daily
+Rates update frequescy of fetcher: configurable
