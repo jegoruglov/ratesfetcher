@@ -12,12 +12,19 @@ class RateParser(object):
 		self.uri = uri
 
 	def parse(self):
-		try:
-			xml = urllib2.urlopen(self.uri).read()
-		except urllib2.HTTPError as e:
-			# TODO: as the utility is a cronjob,
-			# might want to log instead of raising
-			raise e
+		retry_counter = conf.number_of_connection_retries
+		xml = None
+		while retry_counter:
+			try:
+				xml = urllib2.urlopen(self.uri).read()
+				if xml:
+					break
+			except urllib2.HTTPError:
+				print "ERROR: HTTP connection failed, retrying ..."
+				retry_counter -= 1
+
+		if not xml:
+			raise Exception('HTTP Error while fetching rates')
 		
 		pattern = re.compile(conf.rate_pattern)
 		rates = pattern.findall(xml)
