@@ -60,3 +60,10 @@ update_according_to = 'rateswise_update_rate'
 
 # SQLite storage file name (relative or absolute path)
 database_file = 'ratesfetcher.db'
+# Comma-separated output options
+#	std: standard output
+#	db: SQLite database
+output_options = 'std,db'
+
+# Connection retries
+number_of_connection_retries = 5

@@ -80,6 +80,8 @@ class Fetcher(object):
 							db.insert(result['name'], timestamp, result['rate'])
 					if db:
 						db.close()
+						print timestamp, 'Data successfully inserted in DB'
+						print
 
 			self.links_update_countdown -= 1
 			self.rates_update_countdown += 1
