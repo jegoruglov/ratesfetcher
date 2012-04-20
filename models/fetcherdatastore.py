@@ -19,7 +19,6 @@ class FetcherDataStore(object):
 			pass
 		command = '''INSERT INTO {0} VALUES 
 			('{1}', {2})'''.format(table, timestamp, rate)
-		print command
 		self.cursor.execute(command)
 
 	def close(self):
