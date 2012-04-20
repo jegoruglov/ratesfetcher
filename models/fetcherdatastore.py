@@ -10,15 +10,15 @@ class FetcherDataStore(object):
 				on the local machine''')
 		self.cursor = self.connection.cursor()
 
-	def insert(self, table, timestamp, rate):
+	def insert(self, table, ctime, timestamp, rate):
 		command = '''CREATE TABLE {0} 
-			(timestamp text, rate double)'''.format(table)
+			(ctime text,timestamp long, rate double)'''.format(table)
 		try:
 			self.cursor.execute(command)
 		except sqlite3.OperationalError:
 			pass
 		command = '''INSERT INTO {0} VALUES 
-			('{1}', {2})'''.format(table, timestamp, rate)
+			('{1}', {2}, {3})'''.format(table, ctime, timestamp, rate)
 		self.cursor.execute(command)
 
 	def close(self):
