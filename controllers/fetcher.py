@@ -62,11 +62,12 @@ class Fetcher(object):
 			cons_thread.join()
 
 			if results:
-				timestamp = time.ctime()
+				ctime = time.ctime()
+				timestamp = time.mktime(time.strptime(ctime))
 				output = [s.strip() for s in self.output.split(',')]
 				if 'std' in output:
 					for result in results:
-						print timestamp, result
+						print ctime, result
 					print
 				if 'db' in output:
 					db = None
@@ -77,10 +78,11 @@ class Fetcher(object):
 						raise Exception('Database connection error')
 					for result in results:
 						if result['rate'] and result['name']:
-							db.insert(result['name'], timestamp, result['rate'])
+							db.insert(result['name'], ctime,
+							timestamp, result['rate'])
 					if db:
 						db.close()
-						print timestamp, 'Data successfully inserted in DB'
+						print ctime, 'Data successfully inserted in DB'
 						print
 
 			self.links_update_countdown -= 1
