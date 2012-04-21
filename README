@@ -21,5 +21,9 @@ Fetch rate for each exchange rate is configurable
 HTTP connection has configurable number of retries in case of failure
 Output options can be standard output, database, or both
 Test cases are created for linkparser, rateparser and ratefetcherthread
+Provides simple rates monitoring web server, based on Tornado web server and Highcharts javascript plotting library
 
-
+The ratesfetcher is launched for testing on 31.222.141.10
+To see charts visit http://31.222.141.10:8787/
+To see all fetched currencies visit http://31.222.141.10:8787/exchange-rates
+To see data for specific currency visit http://31.222.141.10:8787/rate-history/{currency} (ex. http://31.222.141.10:8787/rate-history/eek)
