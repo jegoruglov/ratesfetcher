@@ -1,6 +1,7 @@
 import unittest
 import re
 
+import __init__
 from ratesfetcher.models import ratefetcherthread
 
 class RateFetcherThreadTest(unittest.TestCase):

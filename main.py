@@ -1,5 +1,5 @@
-from controllers import fetcher
-from config import conf
+import fetcher
+from ratesfetcher.config import conf
 
 def fetch():
 	f = fetcher.Fetcher(output=conf.output_options)

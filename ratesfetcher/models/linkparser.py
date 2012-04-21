@@ -5,7 +5,7 @@ from ratesfetcher.config import conf
 
 # Enables parsing html document based on xpath
 # Requires third party module BeautifulSoup,
-# hense not used in test version
+# hense not used in test version, to avoid dependencies
 #from BeautifulSoup import BeautifulSoup
 
 class LinkParser(object):

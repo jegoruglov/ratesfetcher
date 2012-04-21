@@ -3,7 +3,7 @@ import re
 
 from ratesfetcher.config import conf
 
-# Normally I'd use third party package feedparser here,
+# Normally I'd use third party package feedparser,
 # but will keep less dependencies for test version.
 #import feedparser
 
