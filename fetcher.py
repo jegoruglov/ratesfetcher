@@ -23,6 +23,8 @@ class Fetcher(object):
 
 	def fetch(self):
 		while True:
+			# Try-except block prevents cron job from termination
+			# Error will be logged and cron will continue to work
 			try:
 				# Update links if time has come
 				if self.links_update_countdown == 0:
@@ -61,9 +63,9 @@ class Fetcher(object):
 						timestamp = time.mktime(time.strptime(ctime))
 						self._db_out(results, ctime, timestamp)
 						
-		    except Exception as e:
-		    	print time.ctime(), "ERROR", e
-		    	traceback.print_exc(file=sys.stdout)
+			except Exception as e:
+				print time.ctime(), "ERROR", e
+				traceback.print_exc(file=sys.stdout)
 
 			self.links_update_countdown -= 1
 			self.rates_update_countdown += 1
