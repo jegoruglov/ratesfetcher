@@ -23,42 +23,47 @@ class Fetcher(object):
 
 	def fetch(self):
 		while True:
-			# Update links if time has come
-			if self.links_update_countdown == 0:
-				self.initialize()
-			# Make a list of exchange rates that are ready for update
-			links = self._update_links_list()
+			try:
+				# Update links if time has come
+				if self.links_update_countdown == 0:
+					self.initialize()
+				# Make a list of exchange rates that are ready for update
+				links = self._update_links_list()
 
-			def producer(q, links):
-				for link in links:
-					thread = ratefetcherthread.RateFetcherThread(link)
-					thread.start()
-					q.put(thread, True)
+				def producer(q, links):
+					for link in links:
+						thread = ratefetcherthread.RateFetcherThread(link)
+						thread.start()
+						q.put(thread, True)
 
-			results = []
-			def consumer(q, total_links):
-				while len(results) < total_links:
-					thread = q.get(True)
-					thread.join()
-					results.append(thread.get_result())
+				results = []
+				def consumer(q, total_links):
+					while len(results) < total_links:
+						thread = q.get(True)
+						thread.join()
+						results.append(thread.get_result())
 
-			prod_thread = threading.Thread(
-				target=producer, args=(self.q, links))
-			cons_thread = threading.Thread(
-				target=consumer, args=(self.q, len(links)))
-			prod_thread.start()
-			cons_thread.start()
-			prod_thread.join()
-			cons_thread.join()
+				prod_thread = threading.Thread(
+					target=producer, args=(self.q, links))
+				cons_thread = threading.Thread(
+					target=consumer, args=(self.q, len(links)))
+				prod_thread.start()
+				cons_thread.start()
+				prod_thread.join()
+				cons_thread.join()
 
-			if results:
-				ctime = time.ctime()
-				output = [s.strip() for s in self.output.split(',')]
-				if 'std' in output:
-					self._std_out(results, ctime)
-				if 'db' in output:
-					timestamp = time.mktime(time.strptime(ctime))
-					self._db_out(results, ctime, timestamp)
+				if results:
+					ctime = time.ctime()
+					output = [s.strip() for s in self.output.split(',')]
+					if 'std' in output:
+						self._std_out(results, ctime)
+					if 'db' in output:
+						timestamp = time.mktime(time.strptime(ctime))
+						self._db_out(results, ctime, timestamp)
+						
+		    except Exception as e:
+		    	print time.ctime(), "ERROR", e
+		    	traceback.print_exc(file=sys.stdout)
 
 			self.links_update_countdown -= 1
 			self.rates_update_countdown += 1

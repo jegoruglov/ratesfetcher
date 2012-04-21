@@ -1,3 +1,7 @@
+import sys
+import time
+import traceback
+
 import fetcher
 from ratesfetcher.config import conf
 
