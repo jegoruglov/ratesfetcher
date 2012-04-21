@@ -1,0 +1,20 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<link type="text/css" rel="stylesheet" href="{{ static_url("css/general.css") }}" />
+
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.min.js"></script>
+		<script type="text/javascript" src="{{ static_url("js/general.js") }}"></script>
+		<script type="text/javascript" src="http://code.highcharts.com/stock/highstock.js"></script>
+		<script type="text/javascript" src="http://code.highcharts.com/stock/modules/exporting.js"></script>
+	</head>
+	
+	<body>
+		<div class="container">
+			{% for i, table in enumerate(tables) %}
+				<td><div id="{{ table }}" class="chart {% if i % 2 == 0 %}first{% else %}last{% end %}"></div>
+			{% end %}
+		</div>
+	</body>
+
+</html>
