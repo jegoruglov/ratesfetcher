@@ -1,5 +1,6 @@
 import unittest
 
+import __init__
 from ratesfetcher.models import rateparser
 
 class RateParserTest(unittest.TestCase):

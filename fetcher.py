@@ -27,20 +27,7 @@ class Fetcher(object):
 			if self.links_update_countdown == 0:
 				self.initialize()
 			# Make a list of exchange rates that are ready for update
-			links = []
-			for k, v in self.links.iteritems():
-				update_rate = getattr(conf, conf.update_according_to)
-				try:
-					update_rate = (isinstance(update_rate, dict)
-						and update_rate[k]
-						or update_rate)
-				except KeyError as e:
-					raise e
-				if self.rates_update_countdown % update_rate == 0:
-					links.append({
-						"name": k,
-						"uri": v
-					})
+			links = self._update_links_list()
 
 			def producer(q, links):
 				for link in links:
@@ -66,28 +53,51 @@ class Fetcher(object):
 
 			if results:
 				ctime = time.ctime()
-				timestamp = time.mktime(time.strptime(ctime))
 				output = [s.strip() for s in self.output.split(',')]
 				if 'std' in output:
-					for result in results:
-						print ctime, result
-					print
+					self._std_out(results, ctime)
 				if 'db' in output:
-					db = None
-					try:
-						db = fetcherdatastore.FetcherDataStore(
-							conf.database_file)
-					except:
-						raise Exception('Database connection error')
-					for result in results:
-						if result['rate'] and result['name']:
-							db.insert(result['name'], ctime,
-							timestamp, result['rate'])
-					if db:
-						db.close()
-						print ctime, 'Data successfully inserted in DB'
-						print
+					timestamp = time.mktime(time.strptime(ctime))
+					self._db_out(results, ctime, timestamp)
 
 			self.links_update_countdown -= 1
 			self.rates_update_countdown += 1
 			time.sleep(1)
+
+	def _std_out(self, results, ctime):
+		for result in results:
+			print ctime, result
+		print
+
+	def _db_out(self, results, ctime, timestamp):
+		db = None
+		try:
+			db = fetcherdatastore.FetcherDataStore(
+				conf.database_file)
+		except:
+			raise Exception('Database connection error')
+		for result in results:
+			if result['rate'] and result['name']:
+				db.insert(result['name'], ctime,
+				timestamp, result['rate'])
+		if db:
+			db.close()
+			print ctime, 'Data successfully inserted in DB'
+			print
+
+	def _update_links_list(self):
+		links = []
+		for k, v in self.links.iteritems():
+			update_rate = getattr(conf, conf.update_according_to)
+			try:
+				update_rate = (isinstance(update_rate, dict)
+					and update_rate[k]
+					or update_rate)
+			except KeyError as e:
+				raise e
+			if self.rates_update_countdown % update_rate == 0:
+				links.append({
+					"name": k,
+					"uri": v
+				})
+		return links

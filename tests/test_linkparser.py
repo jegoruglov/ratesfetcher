@@ -1,5 +1,6 @@
 import unittest2
 
+import __init__
 from ratesfetcher.models import linkparser
 from ratesfetcher.config import conf
 
