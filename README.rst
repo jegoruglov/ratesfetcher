@@ -19,12 +19,12 @@ Rates update frequescy of fetcher: configurable
 
 Features
 --------
--Fetches 5 exchange rates concurrently
--Fetch rate for each exchange rate is configurable
--HTTP connection has configurable number of retries in case of failure
--Output options can be standard output, database, or both
--Test cases are created for linkparser, rateparser and ratefetcherthread
--Provides simple rates monitoring web server, based on Tornado web server and Highcharts javascript plotting library
+- Fetches 5 exchange rates concurrently
+- Fetch rate for each exchange rate is configurable
+- HTTP connection has configurable number of retries in case of failure
+- Output options can be standard output, database, or both
+- Test cases are created for linkparser, rateparser and ratefetcherthread
+- Provides simple rates monitoring web server, based on Tornado web server and Highcharts javascript plotting library
 
 Pre-set test environment
 ------------------------
