@@ -5,11 +5,11 @@ with frequecies specified in configuration file.
 
 Run from ratesfetcher directory
 	
-	``python main.py``
+    ``python main.py``
 
 To perform unit testing, run (ex.)
 
-	``python -m unittest test_rateparser``
+    ``python -m unittest test_rateparser``
 
 or use Nose framework for batch testing
 	
@@ -31,7 +31,7 @@ Features
 
 Pre-set test environment
 ------------------------
-The ratesfetcher is launched for testing on 31.222.141.10
-To see charts visit ``http://31.222.141.10:8787/``
-To see all fetched currencies visit ``http://31.222.141.10:8787/exchange-rates``
-To see data for specific currency visit ``http://31.222.141.10:8787/rate-history/{currency}`` (ex. http://31.222.141.10:8787/rate-history/eek)
+- The ratesfetcher is launched for testing on 31.222.141.10
+- To see charts visit ``http://31.222.141.10:8787/``
+- To see all fetched currencies visit ``http://31.222.141.10:8787/exchange-rates``
+- To see data for specific currency visit ``http://31.222.141.10:8787/rate-history/{currency}`` (ex. http://31.222.141.10:8787/rate-history/eek)
