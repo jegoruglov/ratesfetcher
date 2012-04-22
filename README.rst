@@ -14,8 +14,11 @@ To perform unit testing, run (ex.)
 or use Nose framework for batch testing
 	
 Rates source: ``http://www.ecb.int/home/html/rss.en.html``
+
 Rates update frequency of source: daily
+
 Rates update frequescy of fetcher: configurable
+
 
 Features
 --------
